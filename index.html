@@ -16,9 +16,6 @@
       --paper:     #f5f0e8;
       --cream:     #ede7d9;
       --rule:      #d4c9b5;
-      --bronze:    #a0522d;
-      --silver:    #708090;
-      --gold:      #b8860b;
       --accent:    #2c4a3e;
       --danger:    #8b2e2e;
     }
@@ -31,7 +28,6 @@
       font-size: 13px;
     }
 
-    /* ── Noise texture overlay ── */
     body::before {
       content: '';
       position: fixed;
@@ -41,14 +37,13 @@
       z-index: 0;
     }
 
-    /* ── Layout ── */
     .shell {
       position: relative;
       z-index: 1;
       min-height: 100vh;
       display: grid;
-      grid-template-columns: 420px 1fr;
-      grid-template-rows: auto 1fr auto;
+      grid-template-columns: 380px 1fr;
+      grid-template-rows: auto auto 1fr auto;
     }
 
     /* ── Header ── */
@@ -68,20 +63,58 @@
       letter-spacing: 0.02em;
     }
 
-    header span {
-      color: var(--ink-muted);
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+    /* ── Asset status strip ── */
+    #asset-strip {
+      grid-column: 1 / -1;
+      background: var(--cream);
+      border-bottom: 1px solid var(--rule);
+      padding: 10px 40px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px 20px;
+      font-size: 10px;
+      letter-spacing: 0.08em;
     }
 
-    /* ── Sidebar panel ── */
+    #asset-strip .strip-label {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-right: 6px;
+    }
+
+    .asset-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--ink-muted);
+      transition: color 0.3s;
+    }
+
+    .asset-item .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--rule);
+      flex-shrink: 0;
+      transition: background 0.3s;
+    }
+
+    .asset-item.loading .dot { animation: pulse 1s ease-in-out infinite; }
+    .asset-item.ok  .dot     { background: #4a7c59; }
+    .asset-item.ok           { color: var(--ink); }
+    .asset-item.err .dot     { background: var(--danger); }
+    .asset-item.err          { color: var(--danger); }
+
+    @keyframes pulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+    /* ── Sidebar ── */
     .panel {
       border-right: 1px solid var(--rule);
       padding: 36px 40px;
       display: flex;
       flex-direction: column;
-      gap: 0;
       overflow-y: auto;
     }
 
@@ -129,18 +162,16 @@
       box-shadow: 0 0 0 2px rgba(44,74,62,0.12);
     }
 
-    input[type="number"] {
-      -moz-appearance: textfield;
-    }
+    input[type="number"]                              { -moz-appearance: textfield; }
     input[type="number"]::-webkit-outer-spin-button,
-    input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+    input[type="number"]::-webkit-inner-spin-button   { -webkit-appearance: none; }
 
     /* ── Star selector ── */
     .star-group {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
-      margin-bottom: 24px;
+      margin-bottom: 32px;
     }
 
     .star-opt input { display: none; }
@@ -162,72 +193,21 @@
     }
 
     .star-opt label svg { transition: transform 0.15s; }
-
-    .star-opt input:checked + label {
-      border-color: var(--accent);
-      background: rgba(44,74,62,0.06);
-    }
-
+    .star-opt input:checked + label { border-color: var(--accent); background: rgba(44,74,62,0.06); }
     .star-opt input:checked + label svg { transform: scale(1.15); }
 
-    /* ── File upload zones ── */
-    .upload-section { margin-bottom: 32px; }
-
-    .drop-zone {
-      border: 1px dashed var(--rule);
-      border-radius: 2px;
-      padding: 16px;
-      cursor: pointer;
-      text-align: center;
-      color: var(--ink-muted);
-      font-size: 11px;
-      transition: border-color 0.15s, background 0.15s;
-      position: relative;
+    /* ── Layout accordion ── */
+    .layout-accordion {
+      margin-bottom: 28px;
     }
 
-    .drop-zone:hover, .drop-zone.drag-over {
-      border-color: var(--accent);
-      background: rgba(44,74,62,0.04);
-    }
-
-    .drop-zone input[type="file"] {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      cursor: pointer;
-      width: 100%;
-      height: 100%;
-    }
-
-    .drop-zone .dz-label { pointer-events: none; }
-    .drop-zone .dz-label strong { color: var(--ink); display: block; margin-bottom: 3px; }
-
-    .file-status {
-      margin-top: 8px;
-      font-size: 10px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .file-status.ok  { color: var(--accent); }
-    .file-status.err { color: var(--danger); }
-
-    /* ── Font uploads grid ── */
-    .font-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    .font-grid .drop-zone { padding: 12px 8px; font-size: 10px; }
-
-    /* ── Layout config ── */
     .layout-accordion summary {
       font-size: 10px;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--ink-muted);
       cursor: pointer;
-      padding: 10px 0;
+      padding: 12px 0;
       border-top: 1px solid var(--rule);
       user-select: none;
       list-style: none;
@@ -245,12 +225,10 @@
       padding: 16px 0 8px;
     }
 
-    .layout-grid input {
-      padding: 7px 10px;
-      font-size: 12px;
-    }
+    .layout-grid input { padding: 7px 10px; font-size: 12px; }
+    .layout-group { display: flex; flex-direction: column; }
 
-    .layout-grid .lbl {
+    .lbl {
       font-size: 9px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -258,23 +236,20 @@
       margin-bottom: 4px;
     }
 
-    .layout-group { display: flex; flex-direction: column; }
     .layout-heading {
       grid-column: 1 / -1;
       font-size: 9px;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--ink-muted);
-      padding-top: 8px;
+      padding-top: 10px;
       border-top: 1px solid var(--rule);
       margin-top: 4px;
     }
+    .layout-heading:first-child { border-top: none; padding-top: 0; margin-top: 0; }
 
     /* ── Generate button ── */
-    .generate-btn {
-      margin-top: auto;
-      padding-top: 32px;
-    }
+    .generate-btn { margin-top: auto; padding-top: 32px; }
 
     button.primary {
       width: 100%;
@@ -289,12 +264,11 @@
       text-transform: uppercase;
       cursor: pointer;
       transition: background 0.15s, transform 0.1s;
-      position: relative;
     }
 
-    button.primary:hover:not(:disabled) { background: #1e3329; }
+    button.primary:hover:not(:disabled)  { background: #1e3329; }
     button.primary:active:not(:disabled) { transform: scale(0.99); }
-    button.primary:disabled { opacity: 0.45; cursor: not-allowed; }
+    button.primary:disabled { opacity: 0.4; cursor: not-allowed; }
 
     .btn-inner { display: flex; align-items: center; justify-content: center; gap: 10px; }
 
@@ -306,9 +280,8 @@
       animation: spin 0.7s linear infinite;
       display: none;
     }
-    .generating .spinner { display: block; }
+    .generating .spinner  { display: block; }
     .generating .btn-text { opacity: 0.7; }
-
     @keyframes spin { to { transform: rotate(360deg); } }
 
     /* ── Preview pane ── */
@@ -320,7 +293,6 @@
       padding: 48px;
       gap: 20px;
       background: var(--cream);
-      position: relative;
     }
 
     .preview-empty {
@@ -330,14 +302,8 @@
       gap: 14px;
       color: var(--ink-muted);
     }
-
     .preview-empty svg { opacity: 0.3; }
-
-    .preview-empty p {
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
+    .preview-empty p   { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }
 
     iframe#preview {
       width: 100%;
@@ -350,11 +316,7 @@
       display: none;
     }
 
-    .preview-actions {
-      display: flex;
-      gap: 12px;
-      display: none;
-    }
+    .preview-actions { display: none; gap: 12px; }
 
     button.secondary {
       padding: 10px 22px;
@@ -369,7 +331,6 @@
       cursor: pointer;
       transition: border-color 0.15s, background 0.15s;
     }
-
     button.secondary:hover { border-color: var(--ink); background: rgba(0,0,0,0.03); }
 
     /* ── Footer ── */
@@ -384,8 +345,7 @@
       font-size: 10px;
       letter-spacing: 0.1em;
     }
-
-    .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--rule); }
+    footer .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--rule); }
 
     /* ── Toast ── */
     #toast {
@@ -404,15 +364,9 @@
       z-index: 999;
       pointer-events: none;
     }
-
-    #toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-
+    #toast.show  { opacity: 1; transform: translateX(-50%) translateY(0); }
     #toast.error { background: var(--danger); }
 
-    /* ── Responsive ── */
     @media (max-width: 860px) {
       .shell { grid-template-columns: 1fr; }
       .panel { border-right: none; border-bottom: 1px solid var(--rule); }
@@ -426,13 +380,22 @@
   <!-- ── Header ── -->
   <header>
     <h1>Certificate Generator</h1>
-    <span>Client-side · No data leaves your browser</span>
   </header>
+
+  <!-- ── Asset status strip ── -->
+  <div id="asset-strip">
+    <span class="strip-label">Assets</span>
+    <div class="asset-item loading" id="as-template">   <div class="dot"></div><span>template.pdf</span></div>
+    <div class="asset-item loading" id="as-font">       <div class="dot"></div><span>Diploma.ttf</span></div>
+    <div class="asset-item loading" id="as-seal">       <div class="dot"></div><span>seal.png</span></div>
+    <div class="asset-item loading" id="as-star-bronze"><div class="dot"></div><span>star_bronze.png</span></div>
+    <div class="asset-item loading" id="as-star-silver"><div class="dot"></div><span>star_silver.png</span></div>
+    <div class="asset-item loading" id="as-star-gold">  <div class="dot"></div><span>star_gold.png</span></div>
+  </div>
 
   <!-- ── Sidebar ── -->
   <aside class="panel">
 
-    <!-- Recipient details -->
     <div class="section-label">Recipient Details</div>
 
     <div class="field">
@@ -450,149 +413,75 @@
       <input type="number" id="f-years" min="1" max="99" placeholder="e.g. 10" />
     </div>
 
-    <!-- Star type -->
     <label style="margin-bottom:10px">Award Tier</label>
-    <div class="star-group" style="margin-bottom:32px">
+    <div class="star-group">
       <div class="star-opt">
         <input type="radio" name="star" id="star-bronze" value="bronze" />
         <label for="star-bronze">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+          <svg width="28" height="28" viewBox="0 0 24 24">
             <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
               fill="#cd7f32" stroke="#a0522d" stroke-width="1.2" stroke-linejoin="round"/>
-          </svg>
-          Bronze
+          </svg>Bronze
         </label>
       </div>
       <div class="star-opt">
         <input type="radio" name="star" id="star-silver" value="silver" checked />
         <label for="star-silver">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+          <svg width="28" height="28" viewBox="0 0 24 24">
             <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
               fill="#c0c0c0" stroke="#708090" stroke-width="1.2" stroke-linejoin="round"/>
-          </svg>
-          Silver
+          </svg>Silver
         </label>
       </div>
       <div class="star-opt">
         <input type="radio" name="star" id="star-gold" value="gold" />
         <label for="star-gold">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+          <svg width="28" height="28" viewBox="0 0 24 24">
             <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
               fill="#ffd700" stroke="#b8860b" stroke-width="1.2" stroke-linejoin="round"/>
-          </svg>
-          Gold
+          </svg>Gold
         </label>
       </div>
     </div>
 
-    <!-- Asset uploads -->
-    <div class="upload-section">
-      <div class="section-label">PDF Template</div>
-      <div class="drop-zone" id="dz-template">
-        <input type="file" id="f-template" accept=".pdf" />
-        <div class="dz-label">
-          <strong>template.pdf</strong>
-          Drop or click to upload
-        </div>
-      </div>
-      <div class="file-status" id="status-template"></div>
-    </div>
-
-    <div class="upload-section">
-      <div class="section-label">Star Images</div>
-      <div style="display:flex;flex-direction:column;gap:8px">
-        <div>
-          <div class="drop-zone" id="dz-bronze">
-            <input type="file" id="f-bronze" accept="image/png,image/jpeg" />
-            <div class="dz-label"><strong>star-bronze</strong>PNG / JPG</div>
-          </div>
-          <div class="file-status" id="status-bronze"></div>
-        </div>
-        <div>
-          <div class="drop-zone" id="dz-silver">
-            <input type="file" id="f-silver" accept="image/png,image/jpeg" />
-            <div class="dz-label"><strong>star-silver</strong>PNG / JPG</div>
-          </div>
-          <div class="file-status" id="status-silver"></div>
-        </div>
-        <div>
-          <div class="drop-zone" id="dz-gold">
-            <input type="file" id="f-gold" accept="image/png,image/jpeg" />
-            <div class="dz-label"><strong>star-gold</strong>PNG / JPG</div>
-          </div>
-          <div class="file-status" id="status-gold"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="upload-section">
-      <div class="section-label">Fonts</div>
-      <div class="font-grid">
-        <div>
-          <div class="drop-zone" id="dz-font-regular">
-            <input type="file" id="f-font-regular" accept=".ttf,.otf" />
-            <div class="dz-label"><strong>Regular</strong>.ttf / .otf</div>
-          </div>
-          <div class="file-status" id="status-font-regular"></div>
-        </div>
-        <div>
-          <div class="drop-zone" id="dz-font-bold">
-            <input type="file" id="f-font-bold" accept=".ttf,.otf" />
-            <div class="dz-label"><strong>Bold</strong>.ttf / .otf</div>
-          </div>
-          <div class="file-status" id="status-font-bold"></div>
-        </div>
-        <div>
-          <div class="drop-zone" id="dz-font-italic">
-            <input type="file" id="f-font-italic" accept=".ttf,.otf" />
-            <div class="dz-label"><strong>Italic</strong>.ttf / .otf</div>
-          </div>
-          <div class="file-status" id="status-font-italic"></div>
-        </div>
-        <div>
-          <div class="drop-zone" id="dz-font-bolditalic">
-            <input type="file" id="f-font-bolditalic" accept=".ttf,.otf" />
-            <div class="dz-label"><strong>Bold Italic</strong>.ttf / .otf</div>
-          </div>
-          <div class="file-status" id="status-font-bolditalic"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Layout config accordion -->
-    <details class="layout-accordion" style="margin-bottom:28px">
+    <!-- Layout accordion -->
+    <details class="layout-accordion">
       <summary>Layout Configuration</summary>
       <div class="layout-grid">
 
-        <div class="layout-heading">Name text</div>
+        <div class="layout-heading">Name</div>
         <div class="layout-group"><div class="lbl">X</div><input type="number" id="lx-name-x" value="421" /></div>
         <div class="layout-group"><div class="lbl">Y</div><input type="number" id="lx-name-y" value="310" /></div>
         <div class="layout-group"><div class="lbl">Size</div><input type="number" id="lx-name-size" value="42" /></div>
 
-        <div class="layout-heading">Years text</div>
+        <div class="layout-heading">Years of Service</div>
         <div class="layout-group"><div class="lbl">X</div><input type="number" id="lx-years-x" value="421" /></div>
         <div class="layout-group"><div class="lbl">Y</div><input type="number" id="lx-years-y" value="248" /></div>
         <div class="layout-group"><div class="lbl">Size</div><input type="number" id="lx-years-size" value="22" /></div>
 
-        <div class="layout-heading">Date text</div>
+        <div class="layout-heading">Date</div>
         <div class="layout-group"><div class="lbl">X</div><input type="number" id="lx-date-x" value="421" /></div>
         <div class="layout-group"><div class="lbl">Y</div><input type="number" id="lx-date-y" value="195" /></div>
         <div class="layout-group"><div class="lbl">Size</div><input type="number" id="lx-date-size" value="14" /></div>
 
-        <div class="layout-heading">Star image</div>
+        <div class="layout-heading">Star Badge</div>
         <div class="layout-group"><div class="lbl">X</div><input type="number" id="lx-star-x" value="371" /></div>
         <div class="layout-group"><div class="lbl">Y</div><input type="number" id="lx-star-y" value="60" /></div>
         <div class="layout-group"><div class="lbl">Size</div><input type="number" id="lx-star-size" value="100" /></div>
 
+        <div class="layout-heading">Seal</div>
+        <div class="layout-group"><div class="lbl">X</div><input type="number" id="lx-seal-x" value="50" /></div>
+        <div class="layout-group"><div class="lbl">Y</div><input type="number" id="lx-seal-y" value="60" /></div>
+        <div class="layout-group"><div class="lbl">Size</div><input type="number" id="lx-seal-size" value="80" /></div>
+
       </div>
     </details>
 
-    <!-- Generate -->
     <div class="generate-btn">
-      <button class="primary" id="btn-generate">
+      <button class="primary" id="btn-generate" disabled>
         <div class="btn-inner">
           <div class="spinner"></div>
-          <span class="btn-text">Generate Certificate</span>
+          <span class="btn-text">Loading assets…</span>
         </div>
       </button>
     </div>
@@ -607,8 +496,6 @@
         <line x1="20" y1="24" x2="44" y2="24" stroke="#7a6e65" stroke-width="1.5"/>
         <line x1="20" y1="32" x2="44" y2="32" stroke="#7a6e65" stroke-width="1.5"/>
         <line x1="20" y1="40" x2="36" y2="40" stroke="#7a6e65" stroke-width="1.5"/>
-        <polygon points="32,50 34.5,55.3 40.3,56.1 36.1,60.2 37.1,66 32,63.4 26.9,66 27.9,60.2 23.7,56.1 29.5,55.3"
-          fill="#7a6e65" transform="scale(0.6) translate(21,14)"/>
       </svg>
       <p>Your certificate will appear here</p>
     </div>
@@ -625,26 +512,46 @@
     <div class="dot"></div>
     <span>Powered by pdf-lib</span>
     <div class="dot"></div>
-    <span>No files are uploaded anywhere</span>
+    <span>No data is sent to any server</span>
   </footer>
 
 </div>
-
 <div id="toast"></div>
 
-<!-- pdf-lib from CDN — the only external dependency -->
 <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script>
-// ─── State ────────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// ASSET PATHS  — edit these to match your file layout
+// All paths are relative to index.html
+// ═══════════════════════════════════════════════════════════════════════════════
+const ASSETS = {
+  template:   'assets/template.pdf',
+  font:       'assets/Diploma.ttf',
+  seal:       'assets/seal.png',
+  starBronze: 'assets/star_bronze.png',
+  starSilver: 'assets/star_silver.png',
+  starGold:   'assets/star_gold.png',
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════════════════
 const state = {
-  templateBytes: null,
-  fonts: { regular: null, bold: null, italic: null, bolditalic: null },
-  images: { bronze: null, silver: null, gold: null },
+  template:     null,   // ArrayBuffer
+  font:         null,   // ArrayBuffer
+  seal:         null,   // { buffer, isPng }
+  stars: {
+    bronze:     null,   // { buffer, isPng }
+    silver:     null,
+    gold:       null,
+  },
   lastPdfBytes: null,
   lastFilename: null,
 };
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════════════════════
 function toast(msg, isError = false) {
   const el = document.getElementById('toast');
   el.textContent = msg;
@@ -653,26 +560,16 @@ function toast(msg, isError = false) {
   el._t = setTimeout(() => el.className = '', 3200);
 }
 
-function setFileStatus(id, ok, text) {
-  const el = document.getElementById('status-' + id);
-  el.className = 'file-status ' + (ok ? 'ok' : 'err');
-  el.textContent = ok ? '✓ ' + text : '✗ ' + text;
-}
-
-function readFileAsArrayBuffer(file) {
-  return new Promise((res, rej) => {
-    const r = new FileReader();
-    r.onload = () => res(r.result);
-    r.onerror = () => rej(r.error);
-    r.readAsArrayBuffer(file);
-  });
+function setAssetStatus(id, status) {
+  const el = document.getElementById('as-' + id);
+  if (el) el.className = 'asset-item ' + status;
 }
 
 function formatDate(raw) {
   if (!raw) return '';
   const d = new Date(raw + 'T00:00:00');
-  if (isNaN(d.getTime())) return raw;
-  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  return isNaN(d.getTime()) ? raw
+    : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
 function yearsLabel(y) {
@@ -680,51 +577,61 @@ function yearsLabel(y) {
   return n === 1 ? '1 Year of Service' : `${n} Years of Service`;
 }
 
-function suggestFilename(name) {
-  return (name || 'certificate').replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_-]/g, '') + '.pdf';
+function slugName(name) {
+  return (name || 'certificate').replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_-]/g, '');
 }
 
-// ─── Drop zone wiring ─────────────────────────────────────────────────────────
-function wireDropZone(dzId, fileInputId, onFile) {
-  const dz = document.getElementById(dzId);
-  const inp = document.getElementById(fileInputId);
-
-  inp.addEventListener('change', () => { if (inp.files[0]) onFile(inp.files[0]); });
-
-  dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
-  dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
-  dz.addEventListener('drop', e => {
-    e.preventDefault();
-    dz.classList.remove('drag-over');
-    const file = e.dataTransfer.files[0];
-    if (file) onFile(file);
-  });
+function isPng(url) {
+  return url.toLowerCase().endsWith('.png');
 }
 
-// ─── Wire all file inputs ──────────────────────────────────────────────────────
-wireDropZone('dz-template', 'f-template', async file => {
-  if (!file.name.endsWith('.pdf')) { toast('Please upload a PDF file', true); return; }
-  state.templateBytes = await readFileAsArrayBuffer(file);
-  setFileStatus('template', true, file.name);
-});
+async function fetchBinary(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.arrayBuffer();
+}
 
-['bronze', 'silver', 'gold'].forEach(tier => {
-  wireDropZone('dz-' + tier, 'f-' + tier, async file => {
-    if (!file.type.startsWith('image/')) { toast('Please upload a PNG or JPG image', true); return; }
-    state.images[tier] = { buffer: await readFileAsArrayBuffer(file), type: file.type };
-    setFileStatus(tier, true, file.name);
-  });
-});
+// ═══════════════════════════════════════════════════════════════════════════════
+// ASSET LOADING
+// Fetches all assets in parallel on page load. Each is independent — one
+// failure won't block the others. The generate button only enables once the
+// two critical assets (template + font) are ready.
+// ═══════════════════════════════════════════════════════════════════════════════
+async function fetchAssets() {
+  const btn = document.getElementById('btn-generate');
 
-['regular', 'bold', 'italic', 'bolditalic'].forEach(weight => {
-  wireDropZone('dz-font-' + weight, 'f-font-' + weight, async file => {
-    if (!file.name.match(/\.(ttf|otf)$/i)) { toast('Please upload a TTF or OTF font', true); return; }
-    state.fonts[weight] = await readFileAsArrayBuffer(file);
-    setFileStatus('font-' + weight, true, file.name);
-  });
-});
+  async function load(assetId, url, onSuccess) {
+    setAssetStatus(assetId, 'loading');
+    try {
+      const buf = await fetchBinary(url);
+      onSuccess(buf);
+      setAssetStatus(assetId, 'ok');
+    } catch (e) {
+      console.warn(`[assets] Failed to fetch "${url}":`, e.message);
+      setAssetStatus(assetId, 'err');
+    }
+  }
 
-// ─── Layout config read ───────────────────────────────────────────────────────
+  await Promise.all([
+    load('template',    ASSETS.template,   buf => { state.template      = buf; }),
+    load('font',        ASSETS.font,       buf => { state.font          = buf; }),
+    load('seal',        ASSETS.seal,       buf => { state.seal          = { buffer: buf, isPng: isPng(ASSETS.seal) }; }),
+    load('star-bronze', ASSETS.starBronze, buf => { state.stars.bronze  = { buffer: buf, isPng: isPng(ASSETS.starBronze) }; }),
+    load('star-silver', ASSETS.starSilver, buf => { state.stars.silver  = { buffer: buf, isPng: isPng(ASSETS.starSilver) }; }),
+    load('star-gold',   ASSETS.starGold,   buf => { state.stars.gold    = { buffer: buf, isPng: isPng(ASSETS.starGold)   }; }),
+  ]);
+
+  if (state.template && state.font) {
+    btn.disabled = false;
+    btn.querySelector('.btn-text').textContent = 'Generate Certificate';
+  } else {
+    btn.querySelector('.btn-text').textContent = 'Missing assets — see console';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// LAYOUT CONFIG
+// ═══════════════════════════════════════════════════════════════════════════════
 function getLayout() {
   const n = id => parseFloat(document.getElementById(id).value) || 0;
   return {
@@ -732,10 +639,13 @@ function getLayout() {
     years: { x: n('lx-years-x'), y: n('lx-years-y'), size: n('lx-years-size'), align: 'center' },
     date:  { x: n('lx-date-x'),  y: n('lx-date-y'),  size: n('lx-date-size'),  align: 'center' },
     star:  { x: n('lx-star-x'),  y: n('lx-star-y'),  size: n('lx-star-size') },
+    seal:  { x: n('lx-seal-x'),  y: n('lx-seal-y'),  size: n('lx-seal-size') },
   };
 }
 
-// ─── Core PDF generation ──────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// PDF GENERATION
+// ═══════════════════════════════════════════════════════════════════════════════
 async function generatePDF() {
   const { PDFDocument, rgb, StandardFonts } = PDFLib;
 
@@ -744,77 +654,61 @@ async function generatePDF() {
   const years = document.getElementById('f-years').value;
   const star  = document.querySelector('input[name="star"]:checked').value;
 
-  // Validation
-  if (!name)  { toast('Please enter a recipient name', true); return null; }
-  if (!date)  { toast('Please select a date', true); return null; }
-  if (!years || parseInt(years) < 1) { toast('Please enter valid years of service', true); return null; }
-  if (!state.templateBytes) { toast('Please upload a PDF template', true); return null; }
-  if (!state.images[star])  { toast(`Please upload the ${star} star image`, true); return null; }
+  // Validate form
+  if (!name)                        { toast('Please enter a recipient name', true);      return null; }
+  if (!date)                        { toast('Please select a date', true);               return null; }
+  if (!years || parseInt(years) < 1){ toast('Please enter valid years of service', true);return null; }
 
-  const pdfDoc = await PDFDocument.load(state.templateBytes);
+  // Validate critical assets
+  if (!state.template)      { toast('template.pdf failed to load', true); return null; }
+  if (!state.stars[star])   { toast(`star_${star}.png failed to load`, true); return null; }
+
+  // Load template
+  const pdfDoc = await PDFDocument.load(state.template);
   const pages  = pdfDoc.getPages();
-  if (!pages.length) throw new Error('Template has no pages');
+  if (!pages.length) throw new Error('Template PDF has no pages');
   const page = pages[0];
 
-  // ── Embed fonts ──
-  let regularFont, boldFont, italicFont;
+  // Embed font — fall back gracefully to Helvetica if Diploma.ttf didn't load
+  const font = state.font
+    ? await pdfDoc.embedFont(state.font)
+    : await pdfDoc.embedFont(StandardFonts.Helvetica);
 
-  if (state.fonts.regular) {
-    regularFont = await pdfDoc.embedFont(state.fonts.regular);
-  } else {
-    regularFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
-  }
-
-  if (state.fonts.bold) {
-    boldFont = await pdfDoc.embedFont(state.fonts.bold);
-  } else {
-    boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-  }
-
-  if (state.fonts.italic) {
-    italicFont = await pdfDoc.embedFont(state.fonts.italic);
-  } else {
-    italicFont = await pdfDoc.embedFont(StandardFonts.HelveticaOblique);
-  }
-
-  // ── Helper: draw centred text ──
-  function drawCentred(text, cfg, font, color) {
+  // Draw centre-aligned text
+  function drawCentred(text, cfg, color) {
     const w = font.widthOfTextAtSize(text, cfg.size);
-    let x = cfg.x;
-    if (cfg.align === 'center') x = cfg.x - w / 2;
+    const x = cfg.align === 'center' ? cfg.x - w / 2 : cfg.x;
     page.drawText(text, { x, y: cfg.y, size: cfg.size, font, color });
   }
 
   const layout = getLayout();
-  const nameColor  = rgb(0.12, 0.08, 0.35);
-  const yearsColor = rgb(0.25, 0.18, 0.45);
-  const dateColor  = rgb(0.40, 0.40, 0.40);
+  drawCentred(name,              layout.name,  rgb(0.12, 0.08, 0.35));
+  drawCentred(yearsLabel(years), layout.years, rgb(0.25, 0.18, 0.45));
+  drawCentred(formatDate(date),  layout.date,  rgb(0.40, 0.40, 0.40));
 
-  drawCentred(name,               layout.name,  boldFont,    nameColor);
-  drawCentred(yearsLabel(years),  layout.years, regularFont, yearsColor);
-  drawCentred(formatDate(date),   layout.date,  italicFont,  dateColor);
-
-  // ── Embed star image ──
-  const imgData = state.images[star];
-  let image;
-  if (imgData.type === 'image/jpeg' || imgData.type === 'image/jpg') {
-    image = await pdfDoc.embedJpg(imgData.buffer);
-  } else {
-    image = await pdfDoc.embedPng(imgData.buffer);
+  // Embed seal (optional — skip silently if it didn't load)
+  if (state.seal) {
+    const sealImg = state.seal.isPng
+      ? await pdfDoc.embedPng(state.seal.buffer)
+      : await pdfDoc.embedJpg(state.seal.buffer);
+    const ss = layout.seal.size;
+    page.drawImage(sealImg, { x: layout.seal.x, y: layout.seal.y, width: ss, height: ss });
   }
 
-  const s = layout.star.size;
-  page.drawImage(image, {
-    x: layout.star.x,
-    y: layout.star.y,
-    width: s,
-    height: s,
-  });
+  // Embed star
+  const starAsset = state.stars[star];
+  const starImg = starAsset.isPng
+    ? await pdfDoc.embedPng(starAsset.buffer)
+    : await pdfDoc.embedJpg(starAsset.buffer);
+  const sz = layout.star.size;
+  page.drawImage(starImg, { x: layout.star.x, y: layout.star.y, width: sz, height: sz });
 
   return pdfDoc.save();
 }
 
-// ─── Generate button ──────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// BUTTON HANDLERS
+// ═══════════════════════════════════════════════════════════════════════════════
 const btn = document.getElementById('btn-generate');
 
 async function runGenerate() {
@@ -826,18 +720,13 @@ async function runGenerate() {
     const bytes = await generatePDF();
     if (!bytes) return;
 
-    // Store for download
     state.lastPdfBytes = bytes;
-    state.lastFilename = suggestFilename(document.getElementById('f-name').value.trim());
+    state.lastFilename = slugName(document.getElementById('f-name').value.trim()) + '.pdf';
 
-    // Show preview
     const blob = new Blob([bytes], { type: 'application/pdf' });
-    const url  = URL.createObjectURL(blob);
-
     const iframe = document.getElementById('preview');
-    iframe.src = url;
+    iframe.src = URL.createObjectURL(blob);
     iframe.style.display = 'block';
-
     document.getElementById('preview-empty').style.display   = 'none';
     document.getElementById('preview-actions').style.display = 'flex';
 
@@ -853,22 +742,21 @@ async function runGenerate() {
 }
 
 btn.addEventListener('click', runGenerate);
-
-// ─── Download button ──────────────────────────────────────────────────────────
+document.getElementById('btn-regenerate').addEventListener('click', runGenerate);
 document.getElementById('btn-download').addEventListener('click', () => {
   if (!state.lastPdfBytes) return;
-  const blob = new Blob([state.lastPdfBytes], { type: 'application/pdf' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = state.lastFilename || 'certificate.pdf';
+  const a = Object.assign(document.createElement('a'), {
+    href: URL.createObjectURL(new Blob([state.lastPdfBytes], { type: 'application/pdf' })),
+    download: state.lastFilename || 'certificate.pdf',
+  });
   a.click();
 });
 
-// ─── Regenerate button ────────────────────────────────────────────────────────
-document.getElementById('btn-regenerate').addEventListener('click', runGenerate);
-
-// ─── Default date to today ────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════════════════════
 document.getElementById('f-date').value = new Date().toISOString().slice(0, 10);
+fetchAssets();
 </script>
 </body>
 </html>
