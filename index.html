@@ -541,6 +541,7 @@
 <div id="toast"><span id="toast-msg"></span><button id="toast-close" onclick="document.getElementById('toast').className=''">dismiss</button></div>
 
 <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="https://unpkg.com/@pdf-lib/fontkit@1.1.1/dist/fontkit.umd.min.js"></script>
 <script>
 // ═══════════════════════════════════════════════════════════════════════════════
 // ASSET PATHS  — edit these to match your file layout
@@ -690,6 +691,7 @@ async function generatePDF() {
 
   // Load template
   const pdfDoc = await PDFDocument.load(state.template);
+  pdfDoc.registerFontkit(fontkit);
   const pages  = pdfDoc.getPages();
   if (!pages.length) throw new Error('Template PDF has no pages');
   const page = pages[0];
