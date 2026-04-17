@@ -667,6 +667,12 @@
                         </label>
                     </div>
                 </div>
+    <div class="field" style="margin-bottom:16px">
+      <label style="display:flex;align-items:center;gap:8px;text-transform:none;letter-spacing:0;font-size:13px;cursor:pointer;">
+        <input type="checkbox" id="f-border" style="width:auto;margin:0" />
+        Show border
+      </label>
+    </div>
     <div class="field">
       <label>Pronoun</label>
       <div style="display:flex;gap:8px;">
@@ -1058,6 +1064,7 @@
             // ═══════════════════════════════════════════════════════════════════════════════
             async function generatePDF() {
                 const { PDFDocument, rgb, StandardFonts } = PDFLib;
+                const nameColor = rgb(0.059, 0.408, 0.651);  // #0f68a6 — shared by name, years, and border
 
                 const name = document.getElementById("f-name").value.trim();
                 const date = document.getElementById("f-date").value;
@@ -1125,8 +1132,8 @@
 
                 const layout = getLayout();
                 drawCentred(anniversaryText,   layout.anniv, rgb(0, 0, 0));
-                drawCentred(name,              layout.name,  rgb(0.059, 0.408, 0.651));
-                drawCentred(yearsLabel(years), layout.years, rgb(0.059, 0.408, 0.651));
+                drawCentred(name,              layout.name,  nameColor);
+                drawCentred(yearsLabel(years), layout.years, nameColor);
                 drawCentred(formatDate(date),  layout.date,  rgb(0, 0, 0));
 
                 // Draw signature in Blank Script font
@@ -1145,6 +1152,13 @@
                         font: sigFont,
                         color: rgb(0.12, 0.08, 0.35),
                     });
+                }
+
+                // Optional border — drawn in the same colour as the recipient name
+                if (document.getElementById('f-border').checked) {
+                    const { width, height } = page.getSize();
+                    page.drawRectangle({ x: 25.5, y: 25.5, width: width - 51,   height: height - 51,   borderColor: nameColor, borderWidth: 2.5 });
+                    page.drawRectangle({ x: 35.4, y: 35.4, width: width - 70.8, height: height - 70.8, borderColor: nameColor, borderWidth: 0.8 });
                 }
 
                 // Embed seal (optional — skip silently if it didn't load)
