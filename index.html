@@ -401,7 +401,7 @@
             iframe#preview {
                 width: 100%;
                 max-width: 860px;
-                aspect-ratio: 842 / 595;
+                aspect-ratio: 1191 / 842;
                 border: 1px solid var(--rule);
                 border-radius: 2px;
                 box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
@@ -667,97 +667,110 @@
                         </label>
                     </div>
                 </div>
+    <div class="field">
+      <label>Pronoun</label>
+      <div style="display:flex;gap:8px;">
+        <label style="display:flex;align-items:center;gap:5px;text-transform:none;letter-spacing:0;font-size:13px;cursor:pointer;"><input type="radio" name="pronoun" value="his" checked style="width:auto;margin:0"> his</label>
+        <label style="display:flex;align-items:center;gap:5px;text-transform:none;letter-spacing:0;font-size:13px;cursor:pointer;"><input type="radio" name="pronoun" value="her" style="width:auto;margin:0"> her</label>
+        <label style="display:flex;align-items:center;gap:5px;text-transform:none;letter-spacing:0;font-size:13px;cursor:pointer;"><input type="radio" name="pronoun" value="their" style="width:auto;margin:0"> their</label>
+      </div>
+    </div>
 
                 <!-- Layout accordion -->
                 <details class="layout-accordion">
                     <summary>Layout Configuration</summary>
                     <div class="layout-grid">
-                        <div class="layout-heading">Name</div>
+                                <div class="layout-heading">Anniversary Text</div>
+        <div class="layout-group"><div class="lbl">X</div><input type="number" id="lx-anniv-x" value="595" /></div>
+        <div class="layout-group"><div class="lbl">Y</div><input type="number" id="lx-anniv-y" value="593" /></div>
+        <div class="layout-group"><div class="lbl">Size</div><input type="number" id="lx-anniv-size" value="31" /></div>
+
+        <div class="layout-heading">Name</div>
                         <div class="layout-group">
                             <div class="lbl">X</div>
-                            <input type="number" id="lx-name-x" value="421" />
+                            <input type="number" id="lx-name-x" value="595" />
                         </div>
                         <div class="layout-group">
                             <div class="lbl">Y</div>
-                            <input type="number" id="lx-name-y" value="310" />
+                            <input type="number" id="lx-name-y" value="627" />
                         </div>
                         <div class="layout-group">
                             <div class="lbl">Size</div>
-                            <input type="number" id="lx-name-size" value="42" />
+                            <input type="number" id="lx-name-size" value="54" />
                         </div>
 
                         <div class="layout-heading">Years of Service</div>
                         <div class="layout-group">
                             <div class="lbl">X</div>
-                            <input type="number" id="lx-years-x" value="421" />
+                            <input type="number" id="lx-years-x" value="595" />
                         </div>
                         <div class="layout-group">
                             <div class="lbl">Y</div>
-                            <input type="number" id="lx-years-y" value="248" />
+                            <input type="number" id="lx-years-y" value="512" />
                         </div>
                         <div class="layout-group">
                             <div class="lbl">Size</div>
                             <input
                                 type="number"
                                 id="lx-years-size"
-                                value="22"
+                                value="74"
                             />
                         </div>
 
                         <div class="layout-heading">Date</div>
                         <div class="layout-group">
                             <div class="lbl">X</div>
-                            <input type="number" id="lx-date-x" value="421" />
+                            <input type="number" id="lx-date-x" value="595" />
                         </div>
                         <div class="layout-group">
                             <div class="lbl">Y</div>
-                            <input type="number" id="lx-date-y" value="195" />
+                            <input type="number" id="lx-date-y" value="468" />
                         </div>
                         <div class="layout-group">
                             <div class="lbl">Size</div>
-                            <input type="number" id="lx-date-size" value="14" />
+                            <input type="number" id="lx-date-size" value="40" />
                         </div>
 
                         <div class="layout-heading">Star Badge</div>
                         <div class="layout-group">
                             <div class="lbl">X</div>
-                            <input type="number" id="lx-star-x" value="371" />
+                            <input type="number" id="lx-star-x" value="525" />
                         </div>
                         <div class="layout-group">
                             <div class="lbl">Y</div>
-                            <input type="number" id="lx-star-y" value="60" />
+                            <input type="number" id="lx-star-y" value="85" />
                         </div>
                         <div class="layout-group">
                             <div class="lbl">Size</div>
                             <input
                                 type="number"
                                 id="lx-star-size"
-                                value="100"
+                                value="141"
                             />
                         </div>
 
                         <div class="layout-heading">Seal</div>
                         <div class="layout-group">
                             <div class="lbl">X</div>
-                            <input type="number" id="lx-seal-x" value="50" />
+                            <input type="number" id="lx-seal-x" value="71" />
                         </div>
                         <div class="layout-group">
                             <div class="lbl">Y</div>
-                            <input type="number" id="lx-seal-y" value="60" />
+                            <input type="number" id="lx-seal-y" value="85" />
                         </div>
                         <div class="layout-group">
                             <div class="lbl">Size</div>
-                            <input type="number" id="lx-seal-size" value="80" />
+                            <input type="number" id="lx-seal-size" value="113" />
                         </div>
 
                         <div class="layout-heading">Signature</div>
                         <div class="layout-group">
                             <div class="lbl">X</div>
-                            <input type="number" id="lx-sig-x" value="680" />
+                            <input type="number" id="lx-sig-x" value="919" />
                         </div>
                         <div class="layout-group">
                             <div class="lbl">Y</div>
-                            <input type="number" id="lx-sig-y" value="95" />
+                            <input type="number" id="lx-sig-y" value="260" />
                         </div>
                         <div class="layout-group">
                             <div class="lbl">Size</div>
@@ -904,16 +917,12 @@
                 const d = new Date(raw + "T00:00:00");
                 return isNaN(d.getTime())
                     ? raw
-                    : d.toLocaleDateString("en-GB", {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                      });
+                    : 'On ' + d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
             }
 
             function yearsLabel(y) {
                 const n = parseInt(y);
-                return n === 1 ? "1 Year of Service" : `${n} Years of Service`;
+                return n === 1 ? "1 Year at Codestar" : `${n} Years at Codestar`;
             }
 
             function slugName(name) {
@@ -1006,6 +1015,7 @@
                 const n = (id) =>
                     parseFloat(document.getElementById(id).value) || 0;
                 return {
+                    anniv: { x: n('lx-anniv-x'), y: n('lx-anniv-y'), size: n('lx-anniv-size'), align: 'center' },
                     name: {
                         x: n("lx-name-x"),
                         y: n("lx-name-y"),
@@ -1110,14 +1120,14 @@
                     });
                 }
 
+                const pronoun = document.querySelector('input[name="pronoun"]:checked').value;
+                const anniversaryText = `With ${pronoun} ${star} anniversary of`;
+
                 const layout = getLayout();
-                drawCentred(name, layout.name, rgb(0.12, 0.08, 0.35));
-                drawCentred(
-                    yearsLabel(years),
-                    layout.years,
-                    rgb(0.25, 0.18, 0.45),
-                );
-                drawCentred(formatDate(date), layout.date, rgb(0.4, 0.4, 0.4));
+                drawCentred(anniversaryText,   layout.anniv, rgb(0.12, 0.08, 0.35));
+                drawCentred(name,              layout.name,  rgb(0.12, 0.08, 0.35));
+                drawCentred(yearsLabel(years), layout.years, rgb(0.25, 0.18, 0.45));
+                drawCentred(formatDate(date),  layout.date,  rgb(0.40, 0.40, 0.40));
 
                 // Draw signature in Blank Script font
                 const signee = document.getElementById("f-signee").value.trim();
