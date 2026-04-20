@@ -509,7 +509,35 @@
                 display: block;
             }
 
-            @media (max-width: 860px) {
+            /* ── Certificate-type tabs ── */
+            .template-tabs {
+                display: flex;
+                border: 1px solid var(--rule);
+                border-radius: 6px;
+                overflow: hidden;
+                margin-bottom: 20px;
+            }
+            .template-tabs input[type="radio"] {
+                display: none;
+            }
+            .template-tabs label {
+                flex: 1;
+                padding: 9px 0;
+                text-align: center;
+                font-size: 12px;
+                letter-spacing: 0.06em;
+                cursor: pointer;
+                background: transparent;
+                color: var(--ink-muted);
+                text-transform: uppercase;
+                transition: background 0.15s, color 0.15s;
+            }
+            .template-tabs input[type="radio"]:checked + label {
+                background: var(--accent);
+                color: #fff;
+            }
+
+                        @media (max-width: 860px) {
                 .shell {
                     grid-template-columns: 1fr;
                 }
@@ -566,7 +594,15 @@
 
             <!-- ── Sidebar ── -->
             <aside class="panel">
-                <div class="section-label">Recipient Details</div>
+                <div class="section-label">Certificate Type</div>
+                <div class="template-tabs">
+                    <input type="radio" name="cert-type" id="tpl-anniversary" value="anniversary" checked />
+                    <label for="tpl-anniversary">Anniversary</label>
+                    <input type="radio" name="cert-type" id="tpl-honorary" value="honorary" />
+                    <label for="tpl-honorary">Honorary Degree</label>
+                </div>
+
+                                <div class="section-label">Recipient Details</div>
 
                 <div class="field">
                     <label for="f-name">Full Name</label>
@@ -579,81 +615,8 @@
                 </div>
 
                 <div class="field">
-                    <label>Pronoun</label>
-                    <div style="display: flex; gap: 8px">
-                        <label
-                            style="
-                                display: flex;
-                                align-items: center;
-                                gap: 5px;
-                                text-transform: none;
-                                letter-spacing: 0;
-                                font-size: 13px;
-                                cursor: pointer;
-                            "
-                            ><input
-                                type="radio"
-                                name="pronoun"
-                                value="his"
-                                checked
-                                style="width: auto; margin: 0"
-                            />
-                            his</label
-                        >
-                        <label
-                            style="
-                                display: flex;
-                                align-items: center;
-                                gap: 5px;
-                                text-transform: none;
-                                letter-spacing: 0;
-                                font-size: 13px;
-                                cursor: pointer;
-                            "
-                            ><input
-                                type="radio"
-                                name="pronoun"
-                                value="her"
-                                style="width: auto; margin: 0"
-                            />
-                            her</label
-                        >
-                        <label
-                            style="
-                                display: flex;
-                                align-items: center;
-                                gap: 5px;
-                                text-transform: none;
-                                letter-spacing: 0;
-                                font-size: 13px;
-                                cursor: pointer;
-                            "
-                            ><input
-                                type="radio"
-                                name="pronoun"
-                                value="their"
-                                style="width: auto; margin: 0"
-                            />
-                            their</label
-                        >
-                    </div>
-                </div>
-
-                <div class="field">
                     <label for="f-date">Date of Issue</label>
                     <input type="date" id="f-date" />
-                </div>
-
-                <div class="field">
-                    <label for="f-years">Years of Service</label>
-                    <input
-                        type="number"
-                        id="f-years"
-                        min="1"
-                        max="99"
-                        placeholder="e.g. 10"
-                        value="5"
-                    />
                 </div>
 
                 <div class="field">
@@ -666,7 +629,81 @@
                     />
                 </div>
 
-                <label style="margin-bottom: 10px">Award Tier</label>
+                <div id="anniversary-only">
+                    <div class="field">
+                        <label>Pronoun</label>
+                        <div style="display: flex; gap: 8px">
+                            <label
+                                style="
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 5px;
+                                    text-transform: none;
+                                    letter-spacing: 0;
+                                    font-size: 13px;
+                                    cursor: pointer;
+                                "
+                                ><input
+                                    type="radio"
+                                    name="pronoun"
+                                    value="his"
+                                    checked
+                                    style="width: auto; margin: 0"
+                                />
+                                his</label
+                            >
+                            <label
+                                style="
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 5px;
+                                    text-transform: none;
+                                    letter-spacing: 0;
+                                    font-size: 13px;
+                                    cursor: pointer;
+                                "
+                                ><input
+                                    type="radio"
+                                    name="pronoun"
+                                    value="her"
+                                    style="width: auto; margin: 0"
+                                />
+                                her</label
+                            >
+                            <label
+                                style="
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 5px;
+                                    text-transform: none;
+                                    letter-spacing: 0;
+                                    font-size: 13px;
+                                    cursor: pointer;
+                                "
+                                ><input
+                                    type="radio"
+                                    name="pronoun"
+                                    value="their"
+                                    style="width: auto; margin: 0"
+                                />
+                                their</label
+                            >
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="f-years">Years of Service</label>
+                        <input
+                            type="number"
+                            id="f-years"
+                            min="1"
+                            max="99"
+                            placeholder="e.g. 10"
+                            value="5"
+                        />
+                    </div>
+
+                    <label style="margin-bottom: 10px">Award Tier</label>
                 <div class="star-group">
                     <div class="star-opt">
                         <input
@@ -725,6 +762,7 @@
                                 /></svg
                             >Gold
                         </label>
+                    </div>
                     </div>
                 </div>
                 <div class="field" style="margin-bottom: 16px">
@@ -1167,6 +1205,8 @@
                 const star = document.querySelector(
                     'input[name="star"]:checked',
                 ).value;
+                const certType = document.querySelector('input[name="cert-type"]:checked').value;
+                const isHonorary = certType === 'honorary';
 
                 // Validate form
                 if (!name) {
@@ -1177,7 +1217,7 @@
                     toast("Please select a date", true);
                     return null;
                 }
-                if (!years || parseInt(years) < 1) {
+                if (!isHonorary && (!years || parseInt(years) < 1)) {
                     toast("Please enter valid years of service", true);
                     return null;
                 }
@@ -1187,7 +1227,7 @@
                     toast("template.pdf failed to load", true);
                     return null;
                 }
-                if (!state.stars[star]) {
+                if (!isHonorary && !state.stars[star]) {
                     toast(`star_${star}.png failed to load`, true);
                     return null;
                 }
@@ -1225,12 +1265,15 @@
                 const pronoun = document.querySelector(
                     'input[name="pronoun"]:checked',
                 ).value;
-                const anniversaryText = `With ${pronoun} ${star} anniversary of`;
+                const anniversaryText = isHonorary
+                    ? 'With all the rights, privileges, and honors pertaining thereto the'
+                    : `With ${pronoun} ${star} anniversary of`;
+                const yearsText = isHonorary ? 'Codestar Honorary Degree' : yearsLabel(years);
 
                 const layout = getLayout();
                 drawCentred(anniversaryText, layout.anniv, rgb(0, 0, 0));
                 drawCentred(name, layout.name, nameColor);
-                drawCentred(yearsLabel(years), layout.years, nameColor);
+                drawCentred(yearsText, layout.years, nameColor);
                 drawCentred(formatDate(date), layout.date, rgb(0, 0, 0));
 
                 // Draw signature in Blank Script font
@@ -1286,18 +1329,20 @@
                     });
                 }
 
-                // Embed star
-                const starAsset = state.stars[star];
-                const starImg = starAsset.isPng
-                    ? await pdfDoc.embedPng(starAsset.buffer)
-                    : await pdfDoc.embedJpg(starAsset.buffer);
-                const sz = layout.star.size;
-                page.drawImage(starImg, {
-                    x: layout.star.x,
-                    y: layout.star.y,
-                    width: sz,
-                    height: sz,
-                });
+                // Embed star (anniversary only)
+                if (!isHonorary) {
+                    const starAsset = state.stars[star];
+                    const starImg = starAsset.isPng
+                        ? await pdfDoc.embedPng(starAsset.buffer)
+                        : await pdfDoc.embedJpg(starAsset.buffer);
+                    const sz = layout.star.size;
+                    page.drawImage(starImg, {
+                        x: layout.star.x,
+                        y: layout.star.y,
+                        width: sz,
+                        height: sz,
+                    });
+                }
 
                 return pdfDoc.save();
             }
@@ -1322,9 +1367,10 @@
                         .value.trim()
                         .split("-");
                     const datePrefix = `${datePrefixYear}${datePrefixMonth}`;
-                    state.lastFilename = `${datePrefix}_AnniversaryCodestar_${slugName(
-                        document.getElementById("f-name").value.trim(),
-                    )}.pdf`;
+                    const certTypeForFile = document.querySelector('input[name="cert-type"]:checked').value;
+                    state.lastFilename = certTypeForFile === 'honorary'
+                        ? `${datePrefix}_HonoraryDegree_Codestar_${slugName(document.getElementById("f-name").value.trim())}.pdf`
+                        : `${datePrefix}_AnniversaryCodestar_${slugName(document.getElementById("f-name").value.trim())}.pdf`;
 
                     const blob = new Blob([bytes], { type: "application/pdf" });
                     const iframe = document.getElementById("preview");
@@ -1373,6 +1419,14 @@
                 .toISOString()
                 .slice(0, 10);
             fetchAssets();
+
+            // Toggle anniversary-only fields based on certificate type
+            document.querySelectorAll('input[name="cert-type"]').forEach(function(radio) {
+                radio.addEventListener('change', function() {
+                    var isHonorary = this.value === 'honorary';
+                    document.getElementById('anniversary-only').style.display = isHonorary ? 'none' : '';
+                });
+            });
         </script>
     </body>
 </html>
