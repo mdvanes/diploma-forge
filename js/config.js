@@ -1,3 +1,5 @@
+const { rgb } = window.PDFLib;
+
 // Name colours
 export const NAME_COLOR_HONORARY = rgb(0.753, 0.004, 0); // #c00100 red honorary
 export const NAME_COLOR_ANNIVERSARY = rgb(0.059, 0.408, 0.651); // #0f68a6 blue anniversary
