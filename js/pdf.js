@@ -1,6 +1,7 @@
 import { state } from "./state.js";
 import { toast, formatDate, yearsLabel } from "./helpers.js";
 import { getLayout } from "./layout.js";
+import { NAME_COLOR_HONORARY, NAME_COLOR_ANNIVERSARY } from "./config.js";
 
 export async function generatePDF() {
   const { PDFDocument, rgb, StandardFonts } = window.PDFLib;
@@ -13,9 +14,7 @@ export async function generatePDF() {
     'input[name="cert-type"]:checked',
   ).value;
   const isHonorary = certType === "honorary";
-  const nameColor = isHonorary
-    ? rgb(0.753, 0.004, 0) // #c00100 honorary
-    : rgb(0.059, 0.408, 0.651); // #0f68a6 anniversary
+  const nameColor = isHonorary ? NAME_COLOR_HONORARY : NAME_COLOR_ANNIVERSARY;
 
   // Validate form
   if (!name) {
